@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">AndroidUITest</string>
+    <string name="button_ratio">16:9</string>
+</resources>

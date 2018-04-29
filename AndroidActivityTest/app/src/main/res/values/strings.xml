@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DummyTest</string>
+    <string name="btn1_name">Explicit_Intent</string>
+    <string name="btn2_name">Implicit_Intent</string>
+</resources>
