@@ -1,6 +1,7 @@
 package com.example.androiduitest;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AlertDialog;
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.activity_main_button:
+//                //editText
+//                String inputText = editText.getText().toString();
+//                Toast.makeText(this,inputText,Toast.LENGTH_SHORT).show();
+//                //imageView
 //                if (mResource == R.drawable.dog_lord){
 //                    mResource = R.drawable.dog_and_cat;
 //                }
@@ -42,29 +47,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //                    mResource = R.drawable.dog_lord;
 //                }
 //                imageView.setImageResource(mResource);
-
-//                String inputText = editText.getText().toString();
-//                Toast.makeText(this,inputText,Toast.LENGTH_SHORT).show();
-                AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
-                dialog.setTitle("This is a Dialog.");
-                dialog.setMessage("Something important.");
-                dialog.setCancelable(false);
-                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                dialog.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                dialog.show();
+//                //alertDialog
+//                AlertDialog.Builder dialog = new AlertDialog.Builder(v.getContext());
+//                dialog.setTitle("This is a Dialog.");
+//                dialog.setMessage("Something important.");
+//                dialog.setCancelable(false);
+//                dialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+//                dialog.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//
+//                    }
+//                });
+//                dialog.show();
+                  //progressDialog
+                ProgressDialog progressDialog = new ProgressDialog(v.getContext());
+                progressDialog.setTitle("This is ProgressDialog");
+                progressDialog.setMessage("Loading...");
+                progressDialog.setCancelable(true);
+                progressDialog.show();
                 break;
-                default:
-                    break;
+            default:
+                break;
         }
     }
 }
