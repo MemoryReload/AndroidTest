@@ -7,6 +7,37 @@
     tools:context=".MasterActivity">
 
     <android.support.v7.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Standard Mode"
+        android:id="@+id/StandardBtn"
+        android:textAllCaps="false"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SingleTop Mode"
+        android:id="@+id/SingleTopBtn"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/StandardBtn"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SingleTask Mode"
+        android:id="@+id/SingleTaskBtn"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/SingleTopBtn"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SingleInstance Mode"
+        android:id="@+id/SingleInstanceBtn"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/SingleTaskBtn"/>
+
+    <android.support.v7.widget.AppCompatButton
         android:id="@+id/button1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
