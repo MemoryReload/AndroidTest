@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
         initFruits();
         FruitAdapter adapter = new FruitAdapter(MainActivity.this, R.layout.list_item, fruits);
         this.fruitListView.setAdapter(adapter);
+        this.fruitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
     }
 
     protected void initFruits()
