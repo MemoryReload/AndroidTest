@@ -2,15 +2,12 @@ package com.example.heping.listviewtest;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,19 +16,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URL;
+import com.example.heping.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List<Fruit> fruits = new ArrayList<>();
+    private List<Fruit> fruits;
     private ListView fruitListView;
 
     @Override
@@ -47,75 +41,39 @@ public class MainActivity extends AppCompatActivity {
         this.fruitListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                Toast.makeText(MainActivity.this,fruits.get(i).getName(),Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     protected void initFruits()
-    {
-        for (int i=0; i<30; i++)
-        {
-            Fruit fruit = null;
-            if (i % 2 == 0 ){
-                fruit = new Fruit(R.drawable.apple,"Apple");
-            }
-            else {
-                fruit = new Fruit("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000" +
-                        "&sec=1535231654389&di=0b05a5819b76c2dc9dbe345e63c71c6e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu."+
-                        "com%2Fimgad%2Fpic%2Fitem%2F80cb39dbb6fd52668bf47edda118972bd507361f.jpg","Pear");
-            }
-            this.fruits.add(fruit);
-        }
+            {
+                fruits = new ArrayList<Fruit>();
+                for (int i=0; i<30; i++)
+                {
+                    Fruit fruit = null;
+                    if (i % 2 == 0 ){
+                        fruit = new Fruit(R.drawable.apple,"Apple");
+                    }
+                    else {
+                        fruit = new Fruit("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000" +
+                                "&sec=1535231654389&di=0b05a5819b76c2dc9dbe345e63c71c6e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu."+
+                                "com%2Fimgad%2Fpic%2Fitem%2F80cb39dbb6fd52668bf47edda118972bd507361f.jpg","Pear");
+                    }
+                    this.fruits.add(fruit);
+                }
     }
-}
-
-class Fruit extends Object {
-
-    private URL     mImageURL;
-    private int     mImageResource;
-    public Bitmap   imagCache;
-    private String  mName;
-
-
-    public Fruit(@DrawableRes int image, @NonNull String name)
-    {
-        this.mImageResource = image;
-        this.mName = name;
-    }
-
-    public Fruit(String url, @NonNull String name){
-        try {
-            this.mImageURL = new URL(url);
-        } catch (MalformedURLException e) {
-            this.mImageURL = null;
-        }
-        this.mName = name;
-    }
-
-    public String getName()
-    {
-        return this.mName;
-    }
-
-    public URL getImageURL() {
-        return mImageURL;
-    }
-
-    public int getImageResource() {
-        return mImageResource;
-    }
-}
-
-class ViewHolder extends  Object{
-    public ImageView iconView;
-    public TextView  nameView;
 }
 
 class FruitAdapter extends ArrayAdapter<Fruit>{
 
     private int mItemResource;
     private Handler handler;
+
+    static class ViewHolder extends  Object{
+        public ImageView iconView;
+        public TextView  nameView;
+    }
 
     public FruitAdapter(Context context, @LayoutRes int resource, List<Fruit> objects)
     {
@@ -140,20 +98,21 @@ class FruitAdapter extends ArrayAdapter<Fruit>{
             listItemView.setTag(viewHolder);
         }
         final Fruit item = getItem(position);
+        viewHolder.nameView.setText(item.getName());
         if (item.getImageURL() != null){
-            if (item.imagCache != null)
+            if (item.getImageCache() != null)
             {
-                viewHolder.iconView.setImageBitmap(item.imagCache);
+                viewHolder.iconView.setImageBitmap(item.getImageCache());
             }
             else {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        final Bitmap bitmap = FruitAdapter.getBitmapFromURL(item.getImageURL());
+                        final Bitmap bitmap = ImageLoader.getBitmapFromURL(item.getImageURL());
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
-                                item.imagCache = bitmap;
+                                item.setImageCache(bitmap);
                                 viewHolder.iconView.setImageBitmap(bitmap);
                             }
                         });
@@ -161,24 +120,11 @@ class FruitAdapter extends ArrayAdapter<Fruit>{
                 }).start();
             }
         }
-        else{
+        else {
             viewHolder.iconView.setImageResource(item.getImageResource());
         }
-        viewHolder.nameView.setText(item.getName());
         return listItemView;
     }
-
-    public static Bitmap getBitmapFromURL(URL url) {
-            try {
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream input = connection.getInputStream();
-                Bitmap bitmap = BitmapFactory.decodeStream(input);
-                return bitmap;
-            } catch (IOException e) {
-                Log.e("Exception",e.getMessage());
-                e.printStackTrace();
-                return null;
-            }
-    }
 }
+
+
