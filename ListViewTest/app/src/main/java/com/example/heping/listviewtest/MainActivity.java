@@ -1,5 +1,7 @@
 package com.example.heping.listviewtest;
 
+import com.example.heping.R;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Handler;
@@ -17,8 +19,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.example.heping.R;
 
 import java.util.ArrayList;
 import java.util.List;

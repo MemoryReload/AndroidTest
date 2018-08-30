@@ -1,5 +1,6 @@
 package com.example.heping.recyclelisttest;
 
+import com.example.heping.R;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -18,10 +19,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.heping.R;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class RecyleListActivity extends AppCompatActivity {
     private List<Fruit> fruits;
@@ -35,6 +35,7 @@ public class RecyleListActivity extends AppCompatActivity {
         initFruits();
         RecycleListAdapter adapter = new RecycleListAdapter(fruits);
         LinearLayoutManager layoutManager = new LinearLayoutManager(RecyleListActivity.this);
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         this.recycleList.setAdapter(adapter);
         this.recycleList.setLayoutManager(layoutManager);
     }
@@ -44,14 +45,21 @@ public class RecyleListActivity extends AppCompatActivity {
         fruits = new ArrayList<Fruit>();
         for (int i=0; i<30; i++)
         {
+
+            StringBuilder stringBuilder = new StringBuilder();
+            for (int j = 1; j < new Random().nextInt(100); j++){
+                stringBuilder.append("text");
+            }
+            String name = stringBuilder.toString();
+
             Fruit fruit = null;
             if (i % 2 == 0 ){
-                fruit = new Fruit(R.drawable.apple,"Apple");
+                fruit = new Fruit(R.drawable.apple, name);
             }
             else {
                 fruit = new Fruit("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000" +
                         "&sec=1535231654389&di=0b05a5819b76c2dc9dbe345e63c71c6e&imgtype=0&src=http%3A%2F%2Fimgsrc.baidu."+
-                        "com%2Fimgad%2Fpic%2Fitem%2F80cb39dbb6fd52668bf47edda118972bd507361f.jpg","Pear");
+                        "com%2Fimgad%2Fpic%2Fitem%2F80cb39dbb6fd52668bf47edda118972bd507361f.jpg",name);
             }
             fruits.add(fruit);
         }
