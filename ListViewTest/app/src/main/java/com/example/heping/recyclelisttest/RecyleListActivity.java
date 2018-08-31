@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Random;
 
 public class RecyleListActivity extends AppCompatActivity {
-    private List<Fruit> fruits;
-    private RecyclerView recycleList;
+    protected List<Fruit> fruits;
+    protected RecyclerView recycleList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class RecyleListActivity extends AppCompatActivity {
         {
 
             StringBuilder stringBuilder = new StringBuilder();
-            for (int j = 1; j < new Random().nextInt(100); j++){
+            for (int j =0 ; j < new Random().nextInt(100)+1; j++){
                 stringBuilder.append("text");
             }
             String name = stringBuilder.toString();
