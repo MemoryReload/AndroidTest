@@ -81,8 +81,8 @@ class ViewHolder extends RecyclerView.ViewHolder
 
  class RecycleListAdapter extends RecyclerView.Adapter<ViewHolder>
 {
-    private   List<Fruit>    mFruits;
-    private   Handler        handler;
+    protected    List<Fruit>    mFruits;
+    protected    Handler        handler;
 
     public RecycleListAdapter(List<Fruit> fruits)
     {
