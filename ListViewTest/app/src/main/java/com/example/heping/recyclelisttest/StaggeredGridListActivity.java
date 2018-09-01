@@ -55,7 +55,7 @@ class StaggerGridAdapter extends RecycleListAdapter
     private void showDialogForDeletePosition(Context context, final int position)
     {
         new AlertDialog.Builder(context)
-                .setCancelable(false)
+                .setCancelable(true)
                 .setTitle("警 告")
                 .setMessage("您确定要删除这条信息吗？")
                 .setPositiveButton("确定", new DialogInterface.OnClickListener() {
