@@ -39,8 +39,8 @@ class StaggerGridAdapter extends RecycleListAdapter
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.stagger_grid_item,parent,false);
-//        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.stagger_grid_item_linear,parent,false);
+//        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.stagger_grid_item,parent,false);
+        View item = LayoutInflater.from(parent.getContext()).inflate(R.layout.stagger_grid_item_linear,parent,false);
         final ViewHolder viewHolder = new ViewHolder(item);
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,19 +74,19 @@ class StaggerGridAdapter extends RecycleListAdapter
                 .show();
     }
 
-//    @Override
-//    public void onViewAttachedToWindow(@NonNull final ViewHolder holder) {
-//        super.onViewAttachedToWindow(holder);
-//        // There is some thing bugly!
-//        holder.iconView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-//            @Override
-//            public void onGlobalLayout() {
-//                holder.iconView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-//                ViewGroup.LayoutParams layoutParams = holder.iconView.getLayoutParams();
-//                layoutParams.width = holder.iconView.getWidth();
-//                layoutParams.height = holder.iconView.getWidth();
-//                holder.iconView.setLayoutParams(layoutParams);
-//            }
-//        });
-//    }
+    @Override
+    public void onViewAttachedToWindow(@NonNull final ViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        // There is some thing bugly!
+        holder.iconView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                holder.iconView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                ViewGroup.LayoutParams layoutParams = holder.iconView.getLayoutParams();
+                layoutParams.width = holder.iconView.getWidth();
+                layoutParams.height = holder.iconView.getWidth();
+                holder.iconView.setLayoutParams(layoutParams);
+            }
+        });
+    }
 }
