@@ -1,7 +1,12 @@
 package com.example.heping.fragmenttest;
 
+import android.graphics.Color;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
@@ -37,6 +42,16 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
 
     private void showFragmentAtIndex(int index)
     {
+        Fragment newFragment = fragments.get(index);
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment, newFragment);
+        transaction.commit();
 
+        String[] colors = {"#FF0000","#00FF00","#0000FF","#FF5A00"};
+        View view= newFragment.getView();
+        String color = colors[colors.length%4];
+        int c = Color.parseColor(color);
+        view.setBackgroundColor(c);
     }
 }
