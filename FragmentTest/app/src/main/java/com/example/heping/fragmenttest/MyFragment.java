@@ -1,5 +1,6 @@
 package com.example.heping.fragmenttest;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,6 +14,8 @@ public class MyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View myView = inflater.inflate(R.layout.fragment,container,false);
+        String color = getArguments().getString("color");
+        myView.setBackgroundColor(Color.parseColor(color));
         return myView;
     }
 }
