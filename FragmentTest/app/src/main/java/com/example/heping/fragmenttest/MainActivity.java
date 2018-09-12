@@ -1,37 +1,25 @@
 package com.example.heping.fragmenttest;
 
-import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.RadioGroup;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener {
-    private ArrayList<Fragment> fragments;
     private Fragment currentFragment;
     private RadioGroup tabBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        currentFragment = null;
         tabBar = findViewById(R.id.tab_bar);
         tabBar.setOnCheckedChangeListener(this);
-        initFragments();
         tabBar.check(R.id.item0);
-    }
-
-    private void initFragments()
-    {
-        currentFragment = null;
-        fragments = new ArrayList<Fragment>(tabBar.getChildCount());
-        for (int i=0; i<tabBar.getChildCount(); i++){
-            fragments.add(null);
-        }
     }
 
     @Override
@@ -43,10 +31,11 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
     private void showFragmentAtIndex(int index)
     {
         FragmentManager manager = getSupportFragmentManager();
-        Fragment fragmentToShow = fragments.get(index);
+        Fragment fragmentToShow = manager.findFragmentByTag(String.format("%d",index));
         FragmentTransaction transaction = manager.beginTransaction();
         if (currentFragment != null)
         {
+            if (currentFragment == fragmentToShow) return;
             transaction.hide(currentFragment);
         }
         if(fragmentToShow == null) {
@@ -56,8 +45,9 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             Bundle bundle = new Bundle();
             bundle.putString("color",color);
             fragmentToShow.setArguments(bundle);
-            transaction.add(R.id.fragment, fragmentToShow);
+            transaction.add(R.id.fragment,fragmentToShow, String.format("%d",index));
         }
         transaction.show(fragmentToShow).commit();
+        currentFragment = fragmentToShow;
     }
 }
