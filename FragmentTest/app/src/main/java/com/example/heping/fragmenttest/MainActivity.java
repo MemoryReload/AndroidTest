@@ -6,6 +6,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -35,11 +36,18 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
         FragmentTransaction transaction = manager.beginTransaction();
         if (currentFragment != null)
         {
-            if (currentFragment == fragmentToShow) return;
             transaction.hide(currentFragment);
         }
+        boolean shouldCommitInmediately = false;
         if(fragmentToShow == null) {
+            shouldCommitInmediately = true;
             fragmentToShow = new MyFragment();
+            ((MyFragment)fragmentToShow).setCallback(new MyFragmentCallback() {
+                @Override
+                public void onClickFragment(Fragment fragment) {
+                    Toast.makeText(MainActivity.this, fragment.toString(), Toast.LENGTH_SHORT).show();
+                }
+            });
             String[] colors = {"#FF0000","#00FF00","#0000FF","#FF5A00"};
             String color = colors[index%colors.length];
             Bundle bundle = new Bundle();
@@ -48,6 +56,8 @@ public class MainActivity extends AppCompatActivity implements RadioGroup.OnChec
             transaction.add(R.id.fragment,fragmentToShow, String.format("%d",index));
         }
         transaction.show(fragmentToShow).commit();
+        //立即执行事务
+        if (shouldCommitInmediately) manager.executePendingTransactions();
         currentFragment = fragmentToShow;
     }
 }
