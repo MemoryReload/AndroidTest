@@ -1,7 +1,12 @@
 package com.example.heping.broadcasttest;
 
 import android.app.Application;
+import android.util.Log;
 import android.widget.Toast;
+
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class MyApplication extends Application {
     @Override
