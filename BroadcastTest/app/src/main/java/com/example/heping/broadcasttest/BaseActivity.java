@@ -18,6 +18,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         manager = LocalBroadcastManager.getInstance(this);
+        ActivityManager.getManager().addActivity(this);
     }
 
     @Override
@@ -34,11 +35,17 @@ public class BaseActivity extends AppCompatActivity {
         manager.unregisterReceiver(receiver);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityManager.getManager().removeActivity(this);
+    }
+
     class LogoutReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            Toast.makeText(BaseActivity.this,"Application was forced to logout!",Toast.LENGTH_SHORT).show();
+            ActivityManager.getManager().finishAll();
         }
     }
 }

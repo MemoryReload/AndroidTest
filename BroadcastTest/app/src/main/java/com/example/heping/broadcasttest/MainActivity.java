@@ -19,6 +19,11 @@ public class MainActivity extends BaseActivity {
     private NetworkChangeReceiver networkChangeReceiver;
     private Button logoutBtn;
 
+    public static void start(Context ctx){
+        Intent intent = new Intent(ctx, MainActivity.class);
+        ctx.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,16 +50,15 @@ public class MainActivity extends BaseActivity {
 
     class NetworkChangeReceiver extends BroadcastReceiver
     {
-
         @Override
         public void onReceive(Context context, Intent intent) {
 
             ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-            if (networkInfo != null && networkInfo.isAvailable()){
-                Toast.makeText(context,"network is available",Toast.LENGTH_SHORT).show();
-            }else {
-                Toast.makeText(context,"network is unavailable",Toast.LENGTH_SHORT).show();
+            if (networkInfo != null && networkInfo.isAvailable()) {
+                Toast.makeText(context, "network is available", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(context, "network is unavailable", Toast.LENGTH_SHORT).show();
             }
         }
     }
