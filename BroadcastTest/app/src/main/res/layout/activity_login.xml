@@ -33,6 +33,26 @@
         android:textCursorDrawable="@drawable/cursor"
         android:background="@null"
         android:drawableBottom="@drawable/line"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="80px"
+        android:layout_below="@id/password"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_marginHorizontal="16dp"
+        android:gravity="center_vertical">
+        <CheckBox
+            android:id="@+id/rememberBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:buttonTint="@color/colorButtonBg"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="remember"
+            android:textSize="18sp"
+            android:textColor="@color/colorButtonBg"/>
+    </LinearLayout>
     <Button
         android:id="@+id/loginBtn"
         android:layout_width="240dp"

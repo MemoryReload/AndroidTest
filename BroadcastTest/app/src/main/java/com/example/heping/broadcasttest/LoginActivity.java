@@ -2,6 +2,7 @@ package com.example.heping.broadcasttest;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -10,16 +11,17 @@ import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends BaseActivity implements TextView.OnEditorActionListener, View.OnClickListener, View.OnFocusChangeListener {
+public class LoginActivity extends BaseActivity implements TextView.OnEditorActionListener, View.OnClickListener, View.OnFocusChangeListener{
     private View layout;
     private EditText accountEdit;
     private EditText passwordEdit;
     private Button loginBtn;
+    private CheckBox rememberBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,7 @@ public class LoginActivity extends BaseActivity implements TextView.OnEditorActi
         accountEdit.setOnEditorActionListener(this);
         passwordEdit = findViewById(R.id.password);
         passwordEdit.setOnEditorActionListener(this);
+        rememberBtn = findViewById(R.id.rememberBtn);
         loginBtn = findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(this);
     }
@@ -75,6 +78,13 @@ public class LoginActivity extends BaseActivity implements TextView.OnEditorActi
     public void login(String account, String password){
         Log.d("Login", "account= "+accountEdit.getText()+"password= "+passwordEdit.getText());
         //TODO: user identity authenticate operation
+
+        //save the
+        if (rememberBtn.isChecked()){
+
+        }else {
+
+        }
         MainActivity.start(this);
     }
 
