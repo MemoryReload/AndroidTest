@@ -2,6 +2,8 @@ package com.example.heping.broadcasttest;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -15,7 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class LoginActivity extends BaseActivity implements TextView.OnEditorActionListener, View.OnClickListener, View.OnFocusChangeListener {
+public class LoginActivity extends BaseActivity implements TextView.OnEditorActionListener, View.OnClickListener, View.OnFocusChangeListener, Handler.Callback {
     private View layout;
     private EditText accountEdit;
     private EditText passwordEdit;
@@ -52,7 +54,7 @@ public class LoginActivity extends BaseActivity implements TextView.OnEditorActi
             }
             InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(),0);
-            login(accountEdit.getText().toString(),passwordEdit.getText().toString());
+            login(accountEdit.getText().toString(), passwordEdit.getText().toString(), this);
             return true;
         }
         return false;
@@ -69,13 +71,14 @@ public class LoginActivity extends BaseActivity implements TextView.OnEditorActi
             Toast.makeText(this,"密码不能为空！",Toast.LENGTH_SHORT).show();
             return ;
         }
-        login(accountEdit.getText().toString(),passwordEdit.getText().toString());
+        login(accountEdit.getText().toString(), passwordEdit.getText().toString(), this);
     }
 
-    public void login(String account, String password){
+    public void login(String account, String password,Handler.Callback callback){
         Log.d("Login", "account= "+accountEdit.getText()+"password= "+passwordEdit.getText());
         //TODO: user identity authenticate operation
-        MainActivity.start(this);
+        Handler handler = new Handler(this);
+        handler.sendMessage(handler.obtainMessage(1));
     }
 
     @Override
@@ -84,5 +87,12 @@ public class LoginActivity extends BaseActivity implements TextView.OnEditorActi
             InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
         }
+    }
+
+    @Override
+    public boolean handleMessage(Message message) {
+        //保存账户密码
+        MainActivity.start(this);
+        return false;
     }
 }
