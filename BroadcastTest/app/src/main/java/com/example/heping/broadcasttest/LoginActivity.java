@@ -1,10 +1,12 @@
 package com.example.heping.broadcasttest;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -18,12 +20,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.prefs.Preferences;
+
 public class LoginActivity extends BaseActivity implements TextView.OnEditorActionListener, View.OnClickListener, View.OnFocusChangeListener, Handler.Callback {
     private View layout;
     private EditText accountEdit;
     private EditText passwordEdit;
     private Button loginBtn;
     private CheckBox rememberBtn;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
+    private  static String ACCOUNT = "account";
+    private  static String PASSWD = "password";
+    private  static String REMEMBER = "remember";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +48,15 @@ public class LoginActivity extends BaseActivity implements TextView.OnEditorActi
         rememberBtn = findViewById(R.id.rememberBtn);
         loginBtn = findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(this);
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean checked = sharedPreferences.getBoolean(REMEMBER,false);
+        if (checked) {
+            rememberBtn.setChecked(true);
+            String account = sharedPreferences.getString(ACCOUNT,"");
+            String password = sharedPreferences.getString(PASSWD,"");
+            accountEdit.setText(account);
+            passwordEdit.setText(password);
+        }
     }
 
     @Override
@@ -84,8 +103,8 @@ public class LoginActivity extends BaseActivity implements TextView.OnEditorActi
         Message msg = handler.obtainMessage();
         if (account.contentEquals("admin") && password.contentEquals("admin")){
             Bundle params = new Bundle();
-            params.putString("account",account);
-            params.putString("password",password);
+            params.putString(ACCOUNT,account);
+            params.putString(PASSWD,password);
             msg.what = 1;
             msg.setData(params);
         }else{
@@ -122,13 +141,21 @@ public class LoginActivity extends BaseActivity implements TextView.OnEditorActi
 
     private  void  loginSuccess(Message message)
     {
-        //save the
+        //save the account and password
+        editor = sharedPreferences.edit();
         if (rememberBtn.isChecked()){
-
+            editor.putBoolean(REMEMBER,true);
+            Bundle params = message.getData();
+            String account = params.getString(ACCOUNT);
+            String password = params.getString(PASSWD);
+            editor.putString(ACCOUNT,account);
+            editor.putString(PASSWD,password);
         }else {
-
+            editor.clear();
         }
+        editor.apply();
         MainActivity.start(this);
+        finish();
     }
 
     private  void  loginFailed(Message message)
